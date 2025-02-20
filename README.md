@@ -1,1 +1,1 @@
-# PatternsConsoleApp
+# design-patterns
