@@ -1,25 +1,23 @@
-﻿namespace PatternsConsoleApp
+﻿namespace PatternsConsoleApp;
+
+class Compiler
 {
-    class Compiler
+    private Lexer lexer;
+    private Parser parser;
+
+    public string SourceCode { get; set; }
+
+    public Compiler(string sourceCode)
     {
-        private Lexer lexer;
-        private Parser parser;
+        SourceCode = sourceCode;
+    }
 
-        public string SourceCode { get; private set; }
+    public virtual Node Compile()
+    {
+        lexer = new Lexer(SourceCode);
+        lexer.GenerateTokens();
 
-        public Compiler(string sourceCode)
-        {
-            SourceCode = sourceCode;
-            lexer = new Lexer(sourceCode);
-            lexer.GenerateTokens();
-            parser = new Parser(lexer.Tokens);
-        }
-
-        public virtual Node Compile()
-        {
-            var ast = parser.ProduceAST();
-
-            return ast;
-        }
+        parser = new Parser(lexer.Tokens);
+        return parser.ProduceAST();
     }
 }

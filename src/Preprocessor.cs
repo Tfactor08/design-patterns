@@ -1,19 +1,24 @@
-﻿namespace PatternsConsoleApp
+﻿namespace PatternsConsoleApp;
+
+class Preprocessor : Compiler
 {
-    class Preprocessor : Compiler
+    private Compiler compiler;
+
+    public Preprocessor(Compiler compiler) : base(compiler.SourceCode)
     {
-        private Compiler compiler;
+        this.compiler = compiler;
+    }
 
-        public Preprocessor(Compiler compiler) : base(compiler.SourceCode)
-        {
-            this.compiler = compiler;
-        }
+    public override Node Compile()
+    {
+        // preprocessing
+        SourceCodeToUpper();
 
-        public override Node Compile()
-        {
-            // preprocessing
+        return compiler.Compile();
+    }
 
-            return compiler.Compile();
-        }
+    private void SourceCodeToUpper()
+    {
+        compiler.SourceCode = compiler.SourceCode.ToUpper();
     }
 }
