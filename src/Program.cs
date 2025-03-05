@@ -13,3 +13,17 @@ var compilerWithPreprocessor = new Preprocessor(compiler);
 var result = compilerWithPreprocessor.Compile();
 
 Console.WriteLine(result);
+
+/*
+ * Expression
+ * {
+ *      LNode
+ *      {
+ *          Value: QUICK
+ *      },
+ *      RNode
+ *      {
+ *          Value: BROWN
+ *      }
+ * }
+ */
