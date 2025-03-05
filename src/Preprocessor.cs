@@ -1,4 +1,6 @@
-﻿namespace PatternsConsoleApp;
+﻿using System.Text.RegularExpressions;
+
+namespace PatternsConsoleApp;
 
 class Preprocessor : Compiler
 {
@@ -12,13 +14,29 @@ class Preprocessor : Compiler
     public override Node Compile()
     {
         // preprocessing
-        SourceCodeToUpper();
+        SubstituteMacros();
 
         return compiler.Compile();
     }
 
-    private void SourceCodeToUpper()
+    private void SubstituteMacros()
     {
-        compiler.SourceCode = compiler.SourceCode.ToUpper();
+        string macros_line = compiler.SourceCode.Split('\n')[0];
+        string[] macros = macros_line.Split(',');
+        string result = compiler.SourceCode.Split('\n').Skip(1).ToArray()[0];
+
+        foreach (var macro in macros)
+        {
+            string[] constant_value = macro.Split(':');
+            string constant = constant_value[0];
+            string value = constant_value[1].Trim();
+
+            string pattern = @$"\b{constant}\b";
+            result = Regex.Replace(result, pattern, value);
+        }
+
+        compiler.SourceCode = result;
+
+        Console.WriteLine(compiler.SourceCode);
     }
 }
