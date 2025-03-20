@@ -1,8 +1,7 @@
 ﻿using PatternsConsoleApp;
 
 // TODO:
-// fix macros substitution method -- add spaces between macro values;
-// implement compilation as a sentence processing;
+// implement sentence processing as a compilation;
 // rename current branch and create new one;
 // implement arithmetic expressions evaluation as an interpretation
 
