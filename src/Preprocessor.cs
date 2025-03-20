@@ -27,11 +27,11 @@ class Preprocessor : Compiler
 
         foreach (var macro in macros)
         {
-            string[] constant_value = macro.Split(':');
-            string constant = constant_value[0];
-            string value = constant_value[1].Trim();
+            string[] name_value = macro.Split(':');
+            string name = name_value[0].Trim();
+            string value = name_value[1].Trim();
 
-            string pattern = @$"\b{constant}\b";
+            string pattern = $"\\b{name}\\b";
             result = Regex.Replace(result, pattern, value);
         }
 
