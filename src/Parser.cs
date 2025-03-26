@@ -1,22 +1,21 @@
-﻿namespace PatternsConsoleApp
+﻿namespace PatternsConsoleApp;
+
+class Parser
 {
-    class Parser
+    public List<Token> Tokens { get; private set; }
+
+    public Parser(List<Token> tokens)
     {
-        public List<Token> Tokens { get; private set; }
+        Tokens = tokens;
+    }
 
-        public Parser(List<Token> tokens)
-        {
-            Tokens = tokens;
-        }
+    public Node ProduceAST()
+    {
+        var lLiteral = new Literal(Tokens[0].Value);
+        var rLiteral = new Literal(Tokens[1].Value);
 
-        public Expression ProduceAST()
-        {
-            var lLiteral = new Literal(Tokens[0].Value);
-            var rLiteral = new Literal(Tokens[1].Value);
+        var expression = new Expression(lLiteral, rLiteral);
 
-            var expression = new Expression(lLiteral, rLiteral);
-
-            return expression;
-        }
+        return expression;
     }
 }

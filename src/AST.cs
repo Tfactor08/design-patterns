@@ -17,24 +17,45 @@ class Literal : Node
 
     public override string ToString()
     {
-        return $"LNode\n{{\n\tValue: {Value}\n}}";
+        return Value;
     }
 }
 
-class Expression : Node
+class Conjunction : Node
 {
-    public Literal LNode { get; private set; }
-    public Literal RNode { get; private set; }
+    public Node LNode { get; private set; }
+    public Node RNode { get; private set; }
 
-    public Expression(Literal lNode, Literal rNode)
+    public Conjunction(Node lNode, Node rNode)
     {
         LNode = lNode;
         RNode = rNode;
     }
-        
+
     public override string ToString()
     {
-        string output = "Expresssion\n{\n";
+        string output = "Conjuction\n{\n";
+        output += $"{LNode},".IndentLines("\t") + "\n";
+        output += $"{RNode}".IndentLines("\t") + "\n";
+        output += "}";
+        return output;
+    }
+}
+
+class Disjunction : Node
+{
+    public Node LNode { get; private set; }
+    public Node RNode { get; private set; }
+
+    public Disjunction(Node lNode, Node rNode)
+    {
+        LNode = lNode;
+        RNode = rNode;
+    }
+
+    public override string ToString()
+    {
+        string output = "Disjuction\n{\n";
         output += $"{LNode},".IndentLines("\t") + "\n";
         output += $"{RNode}".IndentLines("\t") + "\n";
         output += "}";

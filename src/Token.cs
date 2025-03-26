@@ -1,30 +1,27 @@
-﻿using System.Xml.Linq;
+﻿namespace PatternsConsoleApp;
 
-namespace PatternsConsoleApp
+public enum TokenType
 {
-    public enum TokenType
+    String,
+    Number,
+    LQuote,
+    RQuote
+}
+
+class Token
+{
+    public TokenType TokenType { get; private set; }
+    public string Value { get; private set; }
+
+
+    public Token(TokenType tokenType, string value)
     {
-        String,
-        Number,
-        LQuote,
-        RQuote
+        TokenType = tokenType;
+        Value = value;
     }
 
-    class Token
+    public override string ToString()
     {
-        public TokenType TokenType { get; private set; }
-        public string Value { get; private set; }
-
-
-        public Token(TokenType tokenType, string value)
-        {
-            TokenType = tokenType;
-            Value = value;
-        }
-
-        public override string ToString()
-        {
-            return $"{{\n\tToken. Type: {TokenType}; Value: {Value}\n}}";
-        }
+        return $"{{\n\tToken. Type: {TokenType}; Value: {Value}\n}}";
     }
 }
