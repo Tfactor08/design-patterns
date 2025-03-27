@@ -2,10 +2,10 @@
 
 public enum TokenType
 {
-    String,
-    Number,
-    LQuote,
-    RQuote
+    ConjKW,
+    DisjKW,
+    Literal,
+    EOF
 }
 
 class Token

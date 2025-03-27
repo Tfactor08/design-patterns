@@ -21,44 +21,44 @@ class Literal : Node
     }
 }
 
-class Conjunction : Node
+abstract class BinaryExpr : Node
 {
+    private string operation;
+
     public Node LNode { get; private set; }
     public Node RNode { get; private set; }
 
-    public Conjunction(Node lNode, Node rNode)
+    public BinaryExpr(string operation, Node lNode, Node rNode)
     {
+        this.operation = operation;
         LNode = lNode;
         RNode = rNode;
     }
 
     public override string ToString()
     {
-        string output = "Conjuction\n{\n";
-        output += $"{LNode},".IndentLines("\t") + "\n";
-        output += $"{RNode}".IndentLines("\t") + "\n";
+        string output = $"{operation}\n{{\n";
+        output += "LNode\n{".IndentLines("\t");
+        output += $"\n{LNode}".IndentLines("\t").IndentLines("\t") + "\n";
+        output += "\t},\n";
+        output += "RNode\n{".IndentLines("\t");
+        output += $"\n{RNode}".IndentLines("\t").IndentLines("\t") + "\n";
+        output += "\t}\n";
         output += "}";
         return output;
     }
 }
 
-class Disjunction : Node
+class Conjunction : BinaryExpr
 {
-    public Node LNode { get; private set; }
-    public Node RNode { get; private set; }
-
-    public Disjunction(Node lNode, Node rNode)
+    public Conjunction(Node lNode, Node rNode) : base("Conjunction", lNode, rNode)
     {
-        LNode = lNode;
-        RNode = rNode;
     }
+}
 
-    public override string ToString()
+class Disjunction : BinaryExpr
+{
+    public Disjunction(Node lNode, Node rNode) : base("Disjunction", lNode, rNode)
     {
-        string output = "Disjuction\n{\n";
-        output += $"{LNode},".IndentLines("\t") + "\n";
-        output += $"{RNode}".IndentLines("\t") + "\n";
-        output += "}";
-        return output;
     }
 }

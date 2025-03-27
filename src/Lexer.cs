@@ -1,25 +1,34 @@
-﻿namespace PatternsConsoleApp
+﻿namespace PatternsConsoleApp;
+
+class Lexer
 {
-    class Lexer
+    public string SourceCode { get; private set; }
+    public Queue<Token> Tokens { get; private set; }
+
+    public Lexer(string sourceCode)
     {
-        public string SourceCode { get; private set; }
-        public List<Token> Tokens { get; private set; }
+        SourceCode = sourceCode;
+        Tokens = new Queue<Token>();
+    }
 
-        public Lexer(string sourceCode)
+    public void GenerateTokens()
+    {
+        var words = SourceCode.Split(' ');
+
+        foreach (var w in words)
         {
-            SourceCode = sourceCode;
-            Tokens = new List<Token>();
+            Token token = null;
+
+            if (w == "and")
+                token = new Token(TokenType.ConjKW, w);
+            else if (w == "or")
+                token = new Token(TokenType.DisjKW, w);
+            else
+                token = new Token(TokenType.Literal, w);
+
+            Tokens.Enqueue(token);
         }
 
-        public void GenerateTokens()
-        {
-            var words = SourceCode.Split(' ');
-
-            for (int i = 0; i < words.Length; i++)
-            {
-                Token token = new Token((TokenType)(i % 4), words[i]);
-                Tokens.Add(token);
-            }
-        }
+        Tokens.Enqueue(new Token(TokenType.EOF, null));
     }
 }

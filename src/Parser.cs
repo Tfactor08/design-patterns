@@ -1,21 +1,58 @@
-﻿namespace PatternsConsoleApp;
+﻿using System.Text;
+
+namespace PatternsConsoleApp;
 
 class Parser
 {
-    public List<Token> Tokens { get; private set; }
+    public Queue<Token> Tokens { get; private set; }
 
-    public Parser(List<Token> tokens)
+    public Parser(Queue<Token> tokens)
     {
         Tokens = tokens;
     }
 
     public Node ProduceAST()
     {
-        var lLiteral = new Literal(Tokens[0].Value);
-        var rLiteral = new Literal(Tokens[1].Value);
+        return ParseDisj();
+    }
 
-        var expression = new Expression(lLiteral, rLiteral);
+    private Token At() => Tokens.Peek();
+    private Token Eat() => Tokens.Dequeue();
 
-        return expression;
+    private Node ParseDisj()
+    {
+        Node left = ParseConj();
+        while (At().TokenType == TokenType.DisjKW)
+        {
+            Eat();
+            var right = ParseDisj();
+            left = new Disjunction(left, right);
+        }
+        return left;
+    }
+
+    private Node ParseConj()
+    {
+        Node left = ParseLiteral();
+        while (At().TokenType == TokenType.ConjKW)
+        {
+            Eat();
+            var right = ParseConj();
+            left = new Conjunction(left, right);
+        }
+        return left;
+    }
+
+    private Literal ParseLiteral()
+    {
+        var _value = new StringBuilder(Eat().Value);
+
+        if (At().TokenType == TokenType.EOF)
+            return new Literal(_value.ToString());
+
+        while (!(At().TokenType == TokenType.ConjKW || At().TokenType == TokenType.DisjKW))
+            _value.Append($" {Eat().Value}");
+
+        return new Literal(_value.ToString());
     }
 }
