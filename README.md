@@ -22,7 +22,7 @@ Patterns to be used (rather odd choice, which however is not mine):
 ## Patterns Implementation
 The following overviews are based on my own understanding and may not be accurate.
 
-### Decorator
+### 
 #### Overview
 Decorator Pattern — add a new behaviour to the object (not the class!). \
 \
@@ -34,3 +34,11 @@ Additional advantages:
 - Ability to combine different decorators to achieve new behaviours, which follows the OCP principle.
 
 #### Implementation
+The implementation assumes that the preprocessing stage is optional and can be added to the compiler object if it's needed. Therefore, the `Preprocessor` class, which basically performs macro substitutions, serves as a decorator to the `Compiler` object. Usage of the pattern in the project looks like the following:
+```cs
+Compiler compiler = new Compiler(soruceCode);
+Compiler compilerWithPreprocessor = new Preprocessor(compiler);
+
+compiler.Compile();                  // only compilation
+compilerWithPreprocessor.Compiler(); // compilation with preprocessing stage
+```
