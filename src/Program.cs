@@ -1,7 +1,6 @@
 ﻿using PatternsConsoleApp;
 
 // TODO:
-// implement logical expression processing as a compilation;
 // add decorator pattern description in README;
 // rename current branch and create new one;
 // implement arithmetic expressions evaluation as an interpretation
