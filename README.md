@@ -40,5 +40,5 @@ Compiler compiler = new Compiler(soruceCode);
 Compiler compilerWithPreprocessor = new Preprocessor(compiler);
 
 compiler.Compile();                  // only compilation
-compilerWithPreprocessor.Compile(); // compilation with preprocessing stage
+compilerWithPreprocessor.Compile();  // compilation with preprocessing stage
 ```
