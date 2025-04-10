@@ -1,7 +1,7 @@
 ﻿using PatternsConsoleApp;
 
 // TODO:
-// add decorator pattern description in README;
+// add parenthesized expressions support;
 // rename current branch and create new one;
 // implement arithmetic expressions evaluation as an interpretation
 
