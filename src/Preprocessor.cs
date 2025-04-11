@@ -11,7 +11,7 @@ class Preprocessor : Compiler
         this.compiler = compiler;
     }
 
-    public override Node Compile()
+    public override BoolExpr Compile()
     {
         // preprocessing
         SubstituteMacros();

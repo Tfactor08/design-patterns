@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace PatternsConsoleApp;
+﻿namespace PatternsConsoleApp;
 
 class Parser
 {
@@ -11,48 +9,74 @@ class Parser
         Tokens = tokens;
     }
 
-    public Node ProduceAST()
+    public BoolExpr ProduceAST()
     {
-        return ParseDisj();
+        return ParseOr();
     }
 
     private Token At() => Tokens.Peek();
     private Token Eat() => Tokens.Dequeue();
 
-    private Node ParseDisj()
+    private BoolExpr ParseOr()
     {
-        Node left = ParseConj();
-        while (At().TokenType == TokenType.DisjKW)
+        BoolExpr left = ParseAnd();
+        while (At().TokenType == TokenType.Or)
         {
             Eat();
-            var right = ParseDisj();
-            left = new Disjunction(left, right);
+            var right = ParseAnd();
+            left = new Or(left, right);
         }
         return left;
     }
 
-    private Node ParseConj()
+    private BoolExpr ParseAnd()
     {
-        Node left = ParseLiteral();
-        while (At().TokenType == TokenType.ConjKW)
+        BoolExpr left = ParseNot();
+        while (At().TokenType == TokenType.And)
         {
             Eat();
-            var right = ParseConj();
-            left = new Conjunction(left, right);
+            var right = ParseAnd();
+            left = new And(left, right);
         }
         return left;
     }
 
-    private Literal ParseLiteral()
+    private BoolExpr ParseNot()
     {
-        var _value = new StringBuilder(Eat().Value);
+        if (At().TokenType == TokenType.Not)
+            return new Not(ParseNot());
+        return ParseLiteral();
+    }
 
+    private BoolExpr ParseLiteral()
+    {
         if (At().TokenType == TokenType.EOF)
-            return new Literal(_value.ToString());
-
-        while (!(At().TokenType == TokenType.ConjKW || At().TokenType == TokenType.DisjKW))
-            _value.Append($" {Eat().Value}");
-
-        return new Literal(_value.ToString());
+        {
+            throw new Exception("Unexpected EOF");
+        }
+        else if (At().TokenType == TokenType.Lparen)
+        {
+            BoolExpr expr = ParseOr();
+            if (At().TokenType != TokenType.Rparen)
+                throw new Exception("Missing ')'");
+            return expr;
+        }
+        else if (At().TokenType == TokenType.Literal)
+        {
+            if (At().Value == "true")
+            {
+                Eat();
+                return new BoolExpr(true);
+            }
+            else
+            {
+                Eat();
+                return new BoolExpr(false);
+            }
+        }
+        else
+        {
+            throw new Exception("Unexpected Token Type");
+        }
     }
 }
