@@ -1,9 +1,11 @@
 ﻿using PatternsConsoleApp;
 
 // TODO:
-// add parenthesized expressions support;
-// rename current branch and create new one;
-// implement arithmetic expressions evaluation as an interpretation
+// add 'true' and 'false' keywords;
+// implement literal nodes as booleans;
+// add NOT unary expression;
+// add parenthesized experssions support;
+// implement logical expressions evaluation as an interpretation
 
 string macros = "a: 34, b: 35\n";
 string sourceCode = "a and b or c and d";
