@@ -6,7 +6,6 @@
 // implement logical expressions evaluation as an interpretation
 
 //string macros = "a: 34, b: 35\n";
-//string sourceCode = "true AND false OR false AND true";
 string sourceCode = "true OR false AND true";
 
 Compiler compiler = new Compiler(sourceCode);
