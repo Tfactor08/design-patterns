@@ -12,7 +12,7 @@ class Compiler
         SourceCode = sourceCode;
     }
 
-    public virtual Node Compile()
+    public virtual BoolExpr Compile()
     {
         lexer = new Lexer(SourceCode);
         lexer.GenerateTokens();

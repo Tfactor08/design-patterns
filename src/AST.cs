@@ -6,14 +6,14 @@ class BoolExpr
 {
     public bool Value { get; private set; }
 
-    public Literal(bool value)
+    public BoolExpr(bool value)
     {
         Value = value;
     }
 
     public override string ToString()
     {
-        return Value;
+        return Value.ToString();
     }
 }
 
@@ -24,7 +24,7 @@ abstract class BinaryExpr : BoolExpr
     public BoolExpr LNode { get; private set; }
     public BoolExpr RNode { get; private set; }
 
-    public BinaryExpr(string operation, BoolExpr lNode, BoolExpr rNode)
+    public BinaryExpr(string operation, BoolExpr lNode, BoolExpr rNode) : base(false)
     {
         this.operation = operation;
         LNode = lNode;
@@ -47,14 +47,14 @@ abstract class BinaryExpr : BoolExpr
 
 class And : BinaryExpr
 {
-    public And(Node lNode, Node rNode) : base("And", lNode, rNode)
+    public And(BoolExpr lNode, BoolExpr rNode) : base("And", lNode, rNode)
     {
     }
 }
 
 class Or : BinaryExpr
 {
-    public Or(Node lNode, Node rNode) : base("Or", lNode, rNode)
+    public Or(BoolExpr lNode, BoolExpr rNode) : base("Or", lNode, rNode)
     {
     }
 }
@@ -63,7 +63,7 @@ class Not : BoolExpr
 {
     public BoolExpr Expr { get; private set; }
 
-    public Not(BoolExpr expr)
+    public Not(BoolExpr expr) : base(false)
     {
         Expr = expr;
     }
