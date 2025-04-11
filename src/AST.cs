@@ -2,15 +2,11 @@
 
 namespace PatternsConsoleApp;
 
-abstract class Node
+class BoolExpr
 {
-}
+    public bool Value { get; private set; }
 
-class Literal : Node
-{
-    public string Value { get; private set; }
-
-    public Literal(string value)
+    public Literal(bool value)
     {
         Value = value;
     }
@@ -21,14 +17,14 @@ class Literal : Node
     }
 }
 
-abstract class BinaryExpr : Node
+abstract class BinaryExpr : BoolExpr
 {
     private string operation;
 
-    public Node LNode { get; private set; }
-    public Node RNode { get; private set; }
+    public BoolExpr LNode { get; private set; }
+    public BoolExpr RNode { get; private set; }
 
-    public BinaryExpr(string operation, Node lNode, Node rNode)
+    public BinaryExpr(string operation, BoolExpr lNode, BoolExpr rNode)
     {
         this.operation = operation;
         LNode = lNode;
@@ -49,16 +45,31 @@ abstract class BinaryExpr : Node
     }
 }
 
-class Conjunction : BinaryExpr
+class And : BinaryExpr
 {
-    public Conjunction(Node lNode, Node rNode) : base("Conjunction", lNode, rNode)
+    public And(Node lNode, Node rNode) : base("And", lNode, rNode)
     {
     }
 }
 
-class Disjunction : BinaryExpr
+class Or : BinaryExpr
 {
-    public Disjunction(Node lNode, Node rNode) : base("Disjunction", lNode, rNode)
+    public Or(Node lNode, Node rNode) : base("Or", lNode, rNode)
     {
+    }
+}
+
+class Not : BoolExpr
+{
+    public BoolExpr Expr { get; private set; }
+
+    public Not(BoolExpr expr)
+    {
+        Expr = expr;
+    }
+
+    public override string ToString()
+    {
+        return $"Not\n{{" + "{Expr}".IndentLines("\t") + "\n}}";
     }
 }
