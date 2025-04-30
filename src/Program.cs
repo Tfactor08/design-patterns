@@ -13,8 +13,3 @@ Compiler compiler = new Compiler(sourceCode);
 var ast = compiler.Compile();
 
 Console.WriteLine(ast);
-
-Interpreter interpreter = new Interpreter();
-var result = interpreter.Evaluate(ast);
-
-Console.WriteLine(result);
