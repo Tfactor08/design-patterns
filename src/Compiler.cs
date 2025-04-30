@@ -15,7 +15,7 @@ class Compiler
     public virtual BoolExpr Compile()
     {
         lexer = new Lexer(SourceCode);
-        lexer.GenerateTokens();
+        lexer.Tokenize();
 
         parser = new Parser(lexer.Tokens);
         return parser.ProduceAST();

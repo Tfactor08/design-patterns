@@ -44,7 +44,10 @@ class Parser
     private BoolExpr ParseNot()
     {
         if (At().TokenType == TokenType.Not)
+        {
+            Eat();
             return new Not(ParseNot());
+        }
         return ParseLiteral();
     }
 
@@ -56,9 +59,11 @@ class Parser
         }
         else if (At().TokenType == TokenType.Lparen)
         {
+            Eat();
             BoolExpr expr = ParseOr();
             if (At().TokenType != TokenType.Rparen)
                 throw new Exception("Missing ')'");
+            Eat();
             return expr;
         }
         else if (At().TokenType == TokenType.Literal)
