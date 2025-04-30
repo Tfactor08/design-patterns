@@ -1,4 +1,6 @@
-﻿namespace PatternsConsoleApp;
+﻿using System.Text.RegularExpressions;
+
+namespace PatternsConsoleApp;
 
 class Lexer
 {
@@ -11,56 +13,46 @@ class Lexer
         Tokens = new Queue<Token>();
     }
 
-    public void GenerateTokens()
+    public void Tokenize()
     {
-        var words = SourceCode.Split(' ');
+        string pattern = @"(\w+|\(|\))";
 
-        foreach (var w in words)
+        var matches = Regex.Matches(SourceCode, pattern);
+
+        foreach (Match m in matches)
         {
+            if (string.IsNullOrEmpty(m.Value))
+                continue;
+
             Token token;
 
-            switch (w)
+            switch (m.Value)
             {
                 case "and":
                 case "AND":
-                    token = new Token(TokenType.And, w);
+                    token = new Token(TokenType.And, m.Value);
                     break;
                 case "or":
                 case "OR":
-                    token = new Token(TokenType.Or, w);
+                    token = new Token(TokenType.Or, m.Value);
                     break;
                 case "not":
                 case "NOT":
-                    token = new Token(TokenType.Not, w);
+                    token = new Token(TokenType.Not, m.Value);
                     break;
                 case "true":
                 case "false":
-                    token = new Token(TokenType.Literal, w);
+                    token = new Token(TokenType.Literal, m.Value);
                     break;
                 case "(":
-                    token = new Token(TokenType.Lparen, w);
+                    token = new Token(TokenType.Lparen, m.Value);
                     break;
                 case ")":
-                    token = new Token(TokenType.Rparen, w);
+                    token = new Token(TokenType.Rparen, m.Value);
                     break;
                 default:
                     throw new Exception("Unknown symbol");
             }
-
-            // if (w == "and" || w == "AND")
-            //     token = new Token(TokenType.And, w);
-            // else if (w == "or" || w == "OR")
-            //     token = new Token(TokenType.Or, w);
-            // else if (w == "not" || w == "NOT")
-            //     token = new Token(TokenType.Not, w);
-            // else if (w == "true" || w == "false")
-            //     token = new Token(TokenType.Literal, w);
-            // else if (w == "(")
-            //     token = new Token(TokenType.Lparen, w);
-            // else if (w == ")")
-            //     token = new Token(TokenType.Rparen, w);
-            // else
-            //     throw new Exception("Unknown symbol");
 
             Tokens.Enqueue(token);
         }

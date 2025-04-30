@@ -70,6 +70,6 @@ class Not : BoolExpr
 
     public override string ToString()
     {
-        return $"Not\n{{" + "{Expr}".IndentLines("\t") + "\n}}";
+        return "Not\n{" + $"\n{Expr}".IndentLines("\t") + "\n}";
     }
 }
