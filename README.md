@@ -1,7 +1,7 @@
 # design-patterns
 
 ## Project Structure
-The project serves as a sample to demo the use of several design patterns. The primary idea of the project is to emulate the work of a compiler which produces a syntax tree (AST) from some logical expression (e.g. `a and b or c`). At this moment compilation consists of 3 steps:
+The project serves as a sample to demo the use of several design patterns. The primary idea of the project is to emulate the work of a compiler which produces a syntax tree (AST) from some logical expression (e.g. `not (true and false)`). At this moment compilation consists of 3 steps:
   1. Preprocessing (macros substitution);
   2. Lexical analysis (tokens generation);
   3. Parsing (AST creation).
@@ -10,19 +10,19 @@ The project serves as a sample to demo the use of several design patterns. The p
 
 Already used design patterns:
 - Decorator
+- Interpreter
+- Facade
 
 <!-- -->
 
 Patterns to be used (rather odd choice, which however is not mine):
-- Facade
-- Interpreter
 - Observer
 - State
 
 ## Patterns Implementation
 The following overviews are based on my own understanding and may not be accurate.
 
-### 
+### Decorator
 #### Overview
 Decorator Pattern — add a new behaviour to the object (not the class!). \
 \
@@ -42,3 +42,8 @@ Compiler compilerWithPreprocessor = new Preprocessor(compiler);
 compiler.Compile();                  // only compilation
 compilerWithPreprocessor.Compile();  // compilation with preprocessing stage
 ```
+
+### Interpreter
+#### Overview
+Interpreter Pattern — traverse the AST and evaluate it (in general, it consists of both Parser and Interpreter). \
+\
