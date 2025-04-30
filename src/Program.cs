@@ -1,12 +1,7 @@
 ﻿using PatternsConsoleApp;
 
-// TODO:
-// add parenthesized experssions support (lexer can't see parens since we split the source
-// string by space);
-// implement logical expressions evaluation as an interpretation
-
 //string macros = "a: 34, b: 35\n";
-string sourceCode = "false OR false AND true";
+string sourceCode = "not (true and false)";
 
 Compiler compiler = new Compiler(sourceCode);
 //var compilerWithPreprocessor = new Preprocessor(compiler);
