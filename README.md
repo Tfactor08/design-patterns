@@ -45,7 +45,7 @@ compilerWithPreprocessor.Compile();  // compilation with preprocessing stage
 
 ### Interpreter
 #### Overview
-Interpreter Pattern — traverse the AST and evaluate it. Usually, parsing and interpretation are combined, but parsing **is not** part of the pattern).
+Interpreter Pattern — traverse the AST and evaluate it. Usually, parsing and interpretation are combined, but parsing **is not** part of the pattern.
 Thus, Interpreter focuses only on evaluation of already parsed expressions. The opposite of the Interpreter pattern depends on the context, but usually a compiler is considered as such, since it pre-translates the generated code (AST) to a lower level (machine code, bytecode, etc.) in order to execute it.
 
 #### Implementation
