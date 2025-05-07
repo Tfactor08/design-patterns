@@ -34,7 +34,8 @@ Additional advantages:
 - Ability to combine different decorators to achieve new behaviours, which follows the OCP principle.
 
 #### Implementation
-The implementation assumes that the preprocessing stage is optional and can be added to the compiler object if it's needed. Therefore, the `Preprocessor` class, which basically performs macro substitutions, serves as a decorator to the `Compiler` object. Usage of the pattern in the project looks like the following:
+The implementation assumes that the preprocessing stage is optional and can be added to the compiler object if it's needed. Therefore, the `Preprocessor` class, which basically performs macro substitutions, serves as a decorator to the `Compiler` object. \
+Usage of the pattern in the project looks like the following:
 ```cs
 Compiler compiler = new Compiler(soruceCode);
 Compiler compilerWithPreprocessor = new Preprocessor(compiler);
@@ -63,5 +64,32 @@ public bool Evaluate(BoolExpr expr)
     return !Evaluate(notExpr.Expr);
   else
     return expr.Value;
+}
+```
+
+### Facade
+#### Overview
+Facade Pattern — provide simplified interface to a complex subsystem, containing multiple classes. The provided interface may be stripped down (i.e. may not have subsystem's
+full functionality), but its purpose is to statisfy client's needs. Facade may become a God Object (which is an antipattern), but can be broken down into additional facades
+(which can be used by the client as well as other facades).
+
+#### Implementation
+In this project, the Facade implementation is not far-fetched at all. In fact, it was used unintentionally since `Compiler` object by itself assumes the usage of the pattern,
+since it depends on a few classes — `Lexer` and `Parser`. However, the client needs only a `Compile` method. Thus, `Compiler` naturally becomes a Facade providing a single
+interface for compiling the source code. \
+That interface looks like following:
+```cs
+class Compiler
+{
+  private Lexer lexer;
+  privare Parser parser;
+  ...
+  public AST Compile()
+  {
+     lexer = new Lexer(SourceCode);
+     lexer.Tokenize();
+     parser = new Parser(lexer.Tokens);
+     return parser.ProduceAST();
+  }
 }
 ```
