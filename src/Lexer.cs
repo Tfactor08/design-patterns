@@ -7,6 +7,8 @@ class Lexer
     public string SourceCode { get; private set; }
     public Queue<Token> Tokens { get; private set; }
 
+    public Action<string> UnknownSymbolFound;
+
     public Lexer(string sourceCode)
     {
         SourceCode = sourceCode;
@@ -51,6 +53,8 @@ class Lexer
                     token = new Token(TokenType.Rparen, m.Value);
                     break;
                 default:
+                    if (UnknownSymbolFound != null)
+                        UnknownSymbolFound(m.Value);
                     throw new Exception("Unknown symbol");
             }
 

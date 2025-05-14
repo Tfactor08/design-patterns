@@ -1,9 +1,10 @@
 ﻿using PatternsConsoleApp;
 
 //string macros = "a: 34, b: 35\n";
-string sourceCode = "not (true and false)";
+string sourceCode = "not (true and false) fimoz";
 
 Compiler compiler = new Compiler(sourceCode);
+compiler.UnknownSymbolFound = symbol => Console.WriteLine($"Fuck: {symbol}");
 //var compilerWithPreprocessor = new Preprocessor(compiler);
 var ast = compiler.Compile();
 
