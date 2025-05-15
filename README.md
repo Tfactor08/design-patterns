@@ -8,15 +8,15 @@ The project serves as a sample to demo the use of several design patterns. The p
 
 <!-- -->
 
-Already used design patterns:
+Already used design patterns (rather odd choice, which however is not mine):
 - Decorator
 - Interpreter
 - Facade
+- Observer
 
 <!-- -->
 
-Patterns to be used (rather odd choice, which however is not mine):
-- Observer
+Patterns to be used:
 - State
 
 ## Patterns Implementation
@@ -82,7 +82,7 @@ That interface looks like following:
 class Compiler
 {
   private Lexer lexer;
-  privare Parser parser;
+  private Parser parser;
   ...
   public AST Compile()
   {
@@ -93,3 +93,10 @@ class Compiler
   }
 }
 ```
+
+
+### Observer
+#### Overview
+
+#### Implementation
+That's where far-fetching starts.
