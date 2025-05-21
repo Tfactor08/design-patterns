@@ -1,0 +1,8 @@
+Mention in Observer Pattern section:
+    -- several ways to implement (events, delegates, polymorphism)
+    -- clarify differences
+    -- delegates usage in this project
+
+Don't forget about this thought (I was indeed right):
+"If there hadn't been any change in state, would it still be State pattern? I assume, not -- it would've
+been just usage of polymorphism. I also assume that it could be called Strategy pattern."
