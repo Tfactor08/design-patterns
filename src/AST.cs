@@ -4,7 +4,7 @@ namespace PatternsConsoleApp;
 
 class BoolExpr
 {
-    public bool Value { get; private set; }
+    public bool Value { get; set; }
 
     public BoolExpr(bool value)
     {
@@ -15,6 +15,11 @@ class BoolExpr
     {
         return Value.ToString();
     }
+}
+
+class Literal : BoolExpr
+{
+    public Literal(bool value) : base(value) { }
 }
 
 abstract class BinaryExpr : BoolExpr

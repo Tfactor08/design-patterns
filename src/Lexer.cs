@@ -26,7 +26,7 @@ class Lexer
             if (string.IsNullOrEmpty(m.Value))
                 continue;
 
-            Token token;
+            Token token = null;
 
             switch (m.Value)
             {
@@ -55,7 +55,8 @@ class Lexer
                 default:
                     if (UnknownSymbolFound != null)
                         UnknownSymbolFound(m.Value);
-                    throw new Exception("Unknown symbol");
+                    Environment.Exit(1);
+                    break;
             }
 
             Tokens.Enqueue(token);
