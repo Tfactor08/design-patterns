@@ -71,12 +71,12 @@ class Parser
             if (At().Value == "true")
             {
                 Eat();
-                return new BoolExpr(true);
+                return new Literal(true);
             }
             else
             {
                 Eat();
-                return new BoolExpr(false);
+                return new Literal(false);
             }
         }
         else

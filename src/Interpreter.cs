@@ -8,8 +8,19 @@ namespace PatternsConsoleApp;
 
 class Interpreter
 {
-    public BoolExpr currentExpr;
     public IInterpreterState state;
+    public BoolExpr currentExpr;
+
+    public Interpreter(BoolExpr expr)
+    {
+        currentExpr = expr;
+        state = new EvalState();
+    }
+
+    public void NextState()
+    {
+        state.Next(this);
+    }
 
     //public bool Evaluate(BoolExpr expr)
     //{
@@ -33,30 +44,56 @@ class EvalState : IInterpreterState
 {
     public void Next(Interpreter intrprtr)
     {
-        intrprtr.currentExpr = Evaluate(intrprtr.currentExpr);
+        BoolExpr nextState = Evaluate(intrprtr.currentExpr);
+        intrprtr.currentExpr = nextState;
         intrprtr.state = new ReturnState();
     }
 
     private BoolExpr Evaluate(BoolExpr expr)
     {
-        //if (expr is And andExpr)
-        //    return Evaluate(andExpr.LNode) && Evaluate(andExpr.RNode);
+        if (expr is And andExpr)
+        {   
+            if (andExpr.LNode is Literal lLit && andExpr.RNode is Literal rLit)
+            {
+                return new Literal(lLit.Value && rLit.Value);
+            }
+            else
+            {
+                BoolExpr lNode = Evaluate(andExpr.LNode);
+                BoolExpr rNode = Evaluate(andExpr.RNode);
+                return new And(lNode, rNode);
+            }
+        }
+
+        if (expr is Or orExpr)
+        {
+            if (orExpr.LNode is Literal lLit && orExpr.RNode is Literal rLit)
+            {
+                return new Literal(lLit.Value || rLit.Value);
+            }
+            else
+            {
+                BoolExpr lNode = Evaluate(orExpr.LNode);
+                BoolExpr rNode = Evaluate(orExpr.RNode);
+                return new Or(lNode, rNode);
+            }
+        }
+
         //else if (expr is Or orExpr)
         //    return Evaluate(orExpr.LNode) || Evaluate(orExpr.RNode);
-        if (expr is Not notExpr) {
-            var inner = Evaluate(notExpr.Expr);
-            return inner;
 
-            // TODO
-            // Evaluate should return BoolExpr; then this code should work as expected
-            //
-            // if (inner is Literal)
-            //     return new Literal(!inner.Value);
-            // else
-            //     return new Not(inner);
+        else if (expr is Not notExpr)
+        {
+            var inner = notExpr.Expr;
+            if (inner is Literal lit)
+                return new Literal(!lit.Value);
+            else
+                return new Not(Evaluate(notExpr.Expr));
         }
         else
+        {
             return expr;
+        }
     }
 }
 
